@@ -3,12 +3,13 @@
 (function(iFrame) {  
   'use strict';
 
-  var intervalKey = null,  	// Tätä tarvitaan jotta intervallin saa pysäytettyä halutessaan
-      interval = 200;		// Kuinka usein intervalli toistuu (ms)
+  var intervalKey = null,  							// Tätä tarvitaan jotta intervallin saa pysäytettyä halutessaan
+      interval = 200,								// Kuinka usein intervalli toistuu (ms)
+      iFrameDomainAddr = 'iFrame-domain-address';	// Muuta tähän oikea domain	
 
   function receiveSizeData(event)
   {  
-    if (event.origin === "iFrame-domain-address") {
+    if (event.origin === iFrameDomainAddr) {
     	// debuggausta varten
 		console.log('Window data received. New height is: ' + event.data.height);
 
@@ -29,7 +30,7 @@
     
     // Kun sivu on latautunut, käynnistetään iframen pollaus
     intervalKey = setInterval(function() {
-      iFrame.contentWindow.postMessage('window.size.please', 'iFrame-domain-address');
+      iFrame.contentWindow.postMessage('window.size.please', iFrameDomainAddr);
     }, interval);    
 
   };
